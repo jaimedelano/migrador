@@ -50,12 +50,12 @@
 		}
 	}
 	
-    if ( count($argv) < 3 ) {
-		var_dump($argv, ini_get('register_argc_argv'), phpversion(), php_sapi_name(), $_GET);
-        print "Faltando algum parâmetro.\n";
-        print "Uso: php migrador.php <IP> <REVENDEDOR> <SENHA>\n";
-        exit;
-    }
+	if ( count($argv) < 3 ) {
+		//var_dump($argv, ini_get('register_argc_argv'), phpversion(), php_sapi_name(), $_GET);
+		print "Faltando algum parâmetro.\n";
+		print "Uso: php migrador.php <IP> <REVENDEDOR> <SENHA>\n";
+		exit;
+	}
 	
 	if ( !function_exists('cli_set_process_title') ) {
 		exit("Certifique-se de que o cPanel usa internamente o PHP na versão 5.6 ou superior.\n");
@@ -68,14 +68,14 @@
 		if ( stripos($argv[1], 'whm.') !== false ) $host = 'http' . ($secure ? 's' : null) . '://' . $domain;
 		else $host = 'http' . ($secure ? 's' : null) . '://' . $domain . ':208' . ($secure ? '7' : '6');
 	}
-	//var_dump($host, $domain, $secure); die();
-    $user = $argv[2];
-    $pass = $argv[3];
+
+	$user = $argv[2];
+	$pass = $argv[3];
 	
 	$title = 'cpmove - transferindo a revenda de ' . $user;
 	cli_set_process_title($title) or exit("Falha grave! Não pudemos mudar o título do processo.\n");
 
-    $move = new Backup_Cpanel_Reseller($user, $pass, $host);
+	$move = new Backup_Cpanel_Reseller($user, $pass, $host);
 
 	if ( in_array('-f', $argv) ) $move->force   = true;
 	if ( in_array('-n', $argv) ) $move->exist   = false;
